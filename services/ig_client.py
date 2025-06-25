@@ -20,17 +20,17 @@ def get_ig_client() -> Client:
     if os.path.exists(SESSION_FILE):
         try:
             cl.load_settings(SESSION_FILE)
-            cl.login(username, password)
+            cl.get_timeline_feed()
             print("✅ Reused IG session")
             return cl
         except Exception as e:
-            print(f"Failed to reuse session: {e}, retrying fresh login")
+            print(f"⚠️ Failed to reuse session: {e}, retrying fresh login")
 
     cl.login(username, password)
     cl.dump_settings(SESSION_FILE)
-    print("Logged in and saved new session")
-
+    print("🔐 Logged in and saved new session")
     return cl
+
 
 def download_video_media(cl: Client, url: str) -> str:
     print("starting download process")
@@ -60,10 +60,3 @@ def upload_video(cl: Client, video_path: str, caption: str = "Recognize me? Foll
 
 def ensure_download_dir():
     os.makedirs(DOWNLOAD_DIR, exist_ok=True)
-
-    
-
-
-
-
-# method that uploads videos that are already edited
